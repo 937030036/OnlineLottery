@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+|#pink|UserMgr|
+|#aliceblue|System|
+|UserMgr|
+start
+:Pay;
+if (Alipay or WeChat?) is (Ali) then
+else (WeChat)
+endif
+:支付;
+|System|
+:激活用户管理员;
+stop
+
+@enduml

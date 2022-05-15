@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+actor User
+actor Usermgr
+
+usecase (Register) #palegreen
+note right of (Register): mobile phone,username
+usecase (MaintanceUserinfo) #red
+usecase (MaintanceAwardinfo) #aliceblue
+note bottom of (MaintanceAwardinfo): award name,pic
+usecase (ShowAwardinfo)
+usecase (UpdateAwardinfo)
+usecase (DeleteAwardinfo)
+usecase (ShowUserinfo)
+usecase (UpdateUserinfo)
+usecase (DeleteUserinfo)
+usecase (Pay) #blue
+usecase (LaunchLottery) #yellow
+usecase (ShowLotteryHistoryRecord)#purple
+usecase (DisplayPhoneCode)
+usecase (DisplayName)
+usecase (ChooseAlgorithm)
+
+Usermgr-->(Register)
+Usermgr-->(Pay)
+
+Usermgr-->(MaintanceUserinfo)
+Usermgr-->(LaunchLottery)
+Usermgr-->(ShowLotteryHistoryRecord)
+Usermgr-->(MaintanceAwardinfo)
+
+(Pay)--|>(WechatPay):<<extends>>
+(Pay)--|>(Alipay):<<extends>>
+
+(MaintanceAwardinfo)--|>(ShowAwardinfo):<<include>>
+(MaintanceAwardinfo)--|>(UpdateAwardinfo):<<include>>
+(MaintanceAwardinfo)--|>(DeleteAwardinfo):<<include>>
+
+(MaintanceUserinfo)--|>(ShowUserinfo):<<include>>
+(MaintanceUserinfo)--|>(UpdateUserinfo):<<include>>
+(MaintanceUserinfo)--|>(DeleteUserinfo):<<include>>
+
+
+(LaunchLottery)--|>(DisplayName):<<extends>>
+(LaunchLottery)--|>(DisplayPhoneCode):<<extends>>
+(LaunchLottery)--|>(ChooseAlgorithm):<<include>>
+@enduml

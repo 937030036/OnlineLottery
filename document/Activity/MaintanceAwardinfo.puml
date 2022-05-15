@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+|#aliceblue|UserMgr|
+start
+:维护奖品信息;
+fork
+:增加奖品信息;
+fork again
+:修改奖品信息;
+fork again
+:删除奖品信息;
+fork again
+:展示奖品信息;
+endfork
+stop
+@enduml

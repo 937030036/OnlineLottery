@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+|#aliceblue|UserMgr|
+start
+:选择抽奖算法;
+:发起抽奖;
+|System|
+:根据算法生成中奖名单;
+|UserMgr|
+:记录此次抽奖;
+stop
+
+@enduml

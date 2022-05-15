@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+|#aliceblue|UserMgr|
+start
+:维护用户信息;
+fork
+:增加用户信息;
+fork again
+:修改用户信息;
+fork again
+:删除用户信息;
+fork again
+:展示用户信息;
+endfork
+stop
+@enduml
