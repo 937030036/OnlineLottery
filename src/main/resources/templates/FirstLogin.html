@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>登录</title>
+</head>
+<style type="text/css">
+    .default {
+        background: #eeeeee;
+    }
+
+    .weak {
+        background: #FF0000;
+    }
+
+    .medium {
+        background: #FF9900;
+    }
+
+    .strong {
+        background: #33CC00;
+    }
+
+    input {
+        height: 20px;
+        line-height: 20px;
+        width: 210px;
+    }
+
+    span {
+        display: inline-block;
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+        background: #ddd;
+        text-align: center;
+        margin: 4px 2px;
+    }
+</style>
+<body>
+<br/>
+<br/>
+<div align="center">
+    <font size="5"> <strong>登录</strong></font>
+</div>
+<br/>
+<div class="login">
+    <form name="modify" action="/password" method="post">
+        <input type="hidden" name="_method" value=""/>
+        <div align="center">
+            <input id="pwd1"
+                   type="password"
+                   name="pwd"
+                   placeholder="新密码"
+                   required="required"
+            />
+        </div>
+        <br/>
+        <div align="center">
+            密 码 强 度：<span>弱</span><span>中</span><span>强</span>
+        </div>
+        <br/>
+        <div align="center">
+            <input id="pwd2"
+                   type="password"
+                   placeholder="确认新密码"
+                   required="required"
+            />
+            <div id="warning"></div>
+        </div>
+
+        <br/>
+        <div align="center">
+            <input id="email"
+                   type="text"
+                   name="email"
+                   placeholder="电子邮箱"
+                   required="required"
+            />
+            <div id="emailwn">请输入正确电子邮箱，用于找回密码</div>
+        </div>
+        <br/>
+        <div align="center">
+            <input
+                    type="text"
+                    name="verify"
+                    placeholder="验证码"
+                    required="required"
+            />
+        </div>
+        <br/>
+        <div align="center">
+            <button type="button" onclick="submit()">确定登录</button>
+        </div>
+    </form>
+</div>
+<div th:text="${msg}"></div>
+</body>
+</html>
+<script type="text/javascript">
+    window.onload = function () {
+
+        var oInput = document.getElementById('pwd1');
+        oInput.value = '';
+        var spans = document.getElementsByTagName('span');
+        var pwd2 = document.getElementById("pwd2");
+        var wn = document.getElementById("warning");
+        var em = document.getElementById("email");
+        var emwn = document.getElementById("emailwn");
+
+        oInput.onkeyup = function () {
+            //强度状态设为默认
+            spans[0].className = spans[1].className = spans[2].className = "default";
+
+            var pwd = this.value;
+            var result = 0;
+            for (var i = 0, len = pwd.length; i < len; ++i) {
+                result |= charType(pwd.charCodeAt(i));
+            }
+
+            var level = 0;
+            //对result进行四次循环，计算其level
+            for (var i = 0; i <= 4; i++) {
+                if (result & 1) {
+                    level++;
+                }
+                //右移一位
+                result = result >>> 1;
+            }
+
+            if (pwd.length >= 6) {
+                switch (level) {
+                    case 1:
+                        spans[0].className = "weak";
+                        break;
+                    case 2:
+                        spans[0].className = "medium";
+                        spans[1].className = "medium";
+                        break;
+                    case 3:
+                    case 4:
+                        spans[0].className = "strong";
+                        spans[1].className = "strong";
+                        spans[2].className = "strong";
+                        break;
+                }
+            }
+
+
+        }
+
+        pwd2.onkeyup = function () {
+            var pwd2 = this.value;
+            var pwd1 = oInput.value;
+            if (pwd1 !== pwd2) {
+                wn.innerHTML = "密码不一致！";
+            } else {
+                wn.innerHTML = "";
+            }
+        }
+
+        em.onkeyup = function () {
+            re = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (re.test(em.value)) {
+                emwn.innerHTML = "";
+            } else {
+                emwn.innerHTML = "请输入合法邮箱!";
+            }
+        }
+    }
+
+    /*
+        定义一个函数，对给定的数分为四类(判断密码类型)，返回十进制1，2，4，8
+        数字 0001 -->1  48~57
+        小写字母 0010 -->2  97~122
+        大写字母 0100 -->4  65~90
+        特殊 1000 --> 8 其它
+    */
+    function charType(num) {
+        if (num >= 48 && num <= 57) {
+            return 1;
+        }
+        if (num >= 97 && num <= 122) {
+            return 2;
+        }
+        if (num >= 65 && num <= 90) {
+            return 4;
+        }
+        return 8;
+    }
+
+    function submit() {
+        document.modify._method.value = "post";
+        document.modify.submit();
+    }
+</script>
