@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>你好!!</title>
+    <meta charset="UTF-8" content=""/>
+    <title>网络抽奖系统</title>
 </head>
 <body>
-<p>
-    访问成功！
-</p>
+<br/>
+<br/>
+<div class="welcome">
+    <div align="center">
+        <span style="font-size: large; "> <strong>欢迎访问</strong></span>
+    </div>
+    <br/>
+    <br/>
+    <form action="/register/page" method="get">
+        <div align="center">
+            <button type="submit">注册</button>
+        </div>
+    </form>
+    <br/>
+    <form action="/login/page" method="get">
+        <div align="center">
+            <button type="submit">登录</button>
+        </div>
+    </form>
+</div>
+<div th:text="${msg}"></div>
 </body>
 </html>

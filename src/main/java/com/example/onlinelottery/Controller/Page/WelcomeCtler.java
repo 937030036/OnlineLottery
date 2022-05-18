@@ -1,12 +1,11 @@
-package com.example.onlinelottery.Controller;
+package com.example.onlinelottery.Controller.Page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class Welcome {
+public class WelcomeCtler {
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String welcome(){
