@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface HistoryMapper {
-    @Select("select userid,grade from #{userMgr}_history")
-    List<History> getHistoryListByUserMgr(String userMgr);
+    @Select("select userid,grade from #{id}_history")
+    List<History> getHistoryListByUserMgr(String id);
 }

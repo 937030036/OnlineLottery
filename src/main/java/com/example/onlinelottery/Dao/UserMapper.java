@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Select("select id,phone,name from #{userMgr}_user")
-    List<User> getUserListByUserMgr(String userMgr);
+    @Select("select id,phone,name from #{id}_user")
+    List<User> getUserListByUserMgr(String id);
 }

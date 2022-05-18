@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface AwardMapper {
-    @Select("select grade,name,pic from #{userMgr}_award")
-    List<Award> getAwardListByUserMgr(String userMgr);
+    @Select("select grade,name,pic from #{id}_award")
+    List<Award> getAwardListByUserMgr(String id);
 }

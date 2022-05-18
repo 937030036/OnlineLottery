@@ -8,7 +8,7 @@
 | foreign key |||||||
 |    type     | String | String | String | number  |
 
-## #{UserMgrname}_user
+## #{UserMgrid}_user
 
 |             |   id   | phone  |  name  | 
 |:-----------:|:------:|:-------|:------:|
@@ -18,7 +18,7 @@
 
 * 此表不需手动创建，应在DAO层定义其创建
 
-## #{UserMgrname}_award
+## #{UserMgrid}_award
 
 |             | grade  | name   |  pic   | 
 |:-----------:|:------:|:-------|:------:|
@@ -29,7 +29,7 @@
 * 此表不需手动创建，应在DAO层定义其创建
 
 
-## #{UserMgrname}_history
+## #{UserMgrid}_history
 
 
 |             |         userid          | grade  |
