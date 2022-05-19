@@ -59,15 +59,24 @@ public class SignHandleService implements ISignHandle {
         UserMgr userMgr = userMgrMapper.getUserMgrByPhone(phone);
         if (userMgr == null) {
             return SignMsg.PHONE_NOEXIST;
-        }
-        else if (userMgr.getPassword().equals(password)) {
+        } else if (userMgr.getPassword().equals(password)) {
             if (password.equals(phone)) {
+                request.getSession().setAttribute("usermgr", userMgr);
                 return SignMsg.FIRST_LOGIN;
             } else {
+                request.getSession().setAttribute("usermgr", userMgr);
                 return SignMsg.LOGIN_SUCC;
             }
         } else {
             return SignMsg.PASSWORD_WRONG;
         }
+    }
+
+    @Override
+    public SignMsg ModifypwdHandle(Integer id, String pwd, String email) {
+
+        userMgrMapper.updateUserMgrByPhone(id, pwd, email);
+
+        return SignMsg.MODIFYPWD_SUCC;
     }
 }
