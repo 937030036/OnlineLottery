@@ -4,18 +4,20 @@ import com.example.onlinelottery.Model.UserMgr;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
 @Mapper
 public interface UserMgrMapper {
-    @Select("select id,phone,balance from UserMgr")
+    @Select("select id,phone,balance,password from UserMgr")
     List<UserMgr> getUserMgrList();
 
-    @Select("select id,phone,balance from UserMgr where id=#{id}")
+    @Select("select id,phone,balance,password from UserMgr where id=#{id}")
     UserMgr getUserMgrById(String id);
 
-    @Insert("insert into UserMgr value(#{id},#{phone},#{balance})")
-    Integer addUserMgr(UserMgr userMgr);
+    @Select("select id,phone,balance,password from UserMgr where id=#{phone}")
+    UserMgr getUserMgrByPhone(String phone);
+
+    @Insert("insert into UserMgr value(#{id},#{phone},#{balance},#{password})")
+    void addUserMgr(UserMgr userMgr);
 }

@@ -10,5 +10,5 @@ public interface TableMapper {
             "phone varchar(13),"+
             "name varchar(10)"+
             ")")
-    Integer createUserTableByUserMgrName(String id);
+    void createUserTableByUserMgrId(Integer id);
 }

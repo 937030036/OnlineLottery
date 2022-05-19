@@ -4,7 +4,13 @@
     <meta charset="UTF-8"/>
     <title>登录</title>
 </head>
-<style type="text/css">
+<style>
+    .first {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+
     .default {
         background: #eeeeee;
     }
@@ -40,85 +46,91 @@
 <body>
 <br/>
 <br/>
-<div align="center">
-    <font size="5"> <strong>登录</strong></font>
+<div class="first">
+    <span style="font-size: large; "> <strong>登录</strong></span>
 </div>
 <br/>
-<div class="login">
+<div class="first">
     <form name="modify" action="/password" method="post">
         <input type="hidden" name="_method" value=""/>
-        <div align="center">
-            <input id="pwd1"
-                   type="password"
-                   name="pwd"
-                   placeholder="新密码"
-                   required="required"
-            />
+        <div class="first">
+            <label for="pwd1"></label><input id="pwd1"
+                                             type="password"
+                                             name="pwd"
+                                             placeholder="新密码"
+                                             required="required"
+        />
         </div>
         <br/>
-        <div align="center">
+        <div class="first">
             密 码 强 度：<span>弱</span><span>中</span><span>强</span>
         </div>
         <br/>
-        <div align="center">
-            <input id="pwd2"
-                   type="password"
-                   placeholder="确认新密码"
-                   required="required"
-            />
+        <div class="first">
+            <label for="pwd2"></label><input id="pwd2"
+                                             type="password"
+                                             placeholder="确认新密码"
+                                             required="required"
+        />
             <div id="warning"></div>
         </div>
 
         <br/>
-        <div align="center">
-            <input id="email"
-                   type="text"
-                   name="email"
-                   placeholder="电子邮箱"
-                   required="required"
-            />
+        <div class="first">
+            <label for="email"></label><input id="email"
+                                              type="text"
+                                              name="email"
+                                              placeholder="电子邮箱"
+                                              required="required"
+        />
             <div id="emailwn">请输入正确电子邮箱，用于找回密码</div>
         </div>
         <br/>
-        <div align="center">
-            <input
-                    type="text"
-                    name="verify"
-                    placeholder="验证码"
-                    required="required"
-            />
+        <div class="first">
+            <label>
+                <input
+                        id="ver"
+                        type="text"
+                        name="verify"
+                        placeholder="验证码"
+                        required="required"
+                />
+            </label>
         </div>
         <br/>
-        <div align="center">
-            <button type="button" onclick="submit()">确定登录</button>
+        <div class="first">
+            <button type="button" onclick="submit1()">确定登录</button>
         </div>
     </form>
 </div>
-<div th:text="${msg}"></div>
+<div class="first" th:text="${msg}"></div>
 </body>
 </html>
 <script type="text/javascript">
+    var _pwd1;
+    var _pwd2;
+    var _email;
     window.onload = function () {
 
-        var oInput = document.getElementById('pwd1');
+        const oInput = document.getElementById('pwd1');
         oInput.value = '';
-        var spans = document.getElementsByTagName('span');
-        var pwd2 = document.getElementById("pwd2");
-        var wn = document.getElementById("warning");
-        var em = document.getElementById("email");
-        var emwn = document.getElementById("emailwn");
+        const spans = document.getElementsByTagName('span');
+        const pwd2 = document.getElementById("pwd2");
+        const wn = document.getElementById("warning");
+        const em = document.getElementById("email");
+        const emwn = document.getElementById("emailwn");
 
         oInput.onkeyup = function () {
             //强度状态设为默认
             spans[0].className = spans[1].className = spans[2].className = "default";
 
-            var pwd = this.value;
-            var result = 0;
+            const pwd = this.value;
+            let result = 0;
             for (var i = 0, len = pwd.length; i < len; ++i) {
                 result |= charType(pwd.charCodeAt(i));
             }
 
-            var level = 0;
+            let level = 0;
             //对result进行四次循环，计算其level
             for (var i = 0; i <= 4; i++) {
                 if (result & 1) {
@@ -129,21 +141,28 @@
             }
 
             if (pwd.length >= 6) {
+                _pwd1 = true;
                 switch (level) {
                     case 1:
-                        spans[0].className = "weak";
+                        spans[1].className = "weak";
                         break;
                     case 2:
-                        spans[0].className = "medium";
                         spans[1].className = "medium";
+                        spans[2].className = "medium";
                         break;
                     case 3:
                     case 4:
-                        spans[0].className = "strong";
                         spans[1].className = "strong";
                         spans[2].className = "strong";
+                        spans[3].className = "strong";
                         break;
                 }
+            } else {
+                _pwd1 = false;
+                wn.innerHTML = "密码至少6位！";
+                spans[1].className = "default";
+                spans[2].className = "default";
+                spans[3].className = "default";
             }
 
 
@@ -153,8 +172,10 @@
             var pwd2 = this.value;
             var pwd1 = oInput.value;
             if (pwd1 !== pwd2) {
+                _pwd2 = false;
                 wn.innerHTML = "密码不一致！";
             } else {
+                _pwd2 = true;
                 wn.innerHTML = "";
             }
         }
@@ -162,8 +183,10 @@
         em.onkeyup = function () {
             re = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
             if (re.test(em.value)) {
+                _email = true;
                 emwn.innerHTML = "";
             } else {
+                _email = false;
                 emwn.innerHTML = "请输入合法邮箱!";
             }
         }
@@ -189,8 +212,13 @@
         return 8;
     }
 
-    function submit() {
-        document.modify._method.value = "post";
-        document.modify.submit();
+    function submit1() {
+        var v = document.getElementById("ver");
+
+        if (_pwd1 && _pwd2 && _email && v.value !== "") {
+            document.modify.submit();
+        } else {
+            alert("输入有错误！");
+        }
     }
 </script>
