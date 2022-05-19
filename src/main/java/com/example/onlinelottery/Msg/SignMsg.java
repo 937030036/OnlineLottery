@@ -10,16 +10,15 @@ public enum SignMsg {
     PHONE_EXIST("电话已存在,请重试"),
     PHONE_NOEXIST("电话不存在，请注册"),
     PASSWORD_WRONG("密码错误，请重试"),
+
+    FIRST_LOGIN("首次登录"),
+
     NO_MSG("");
 
-    private String msg_str;
+    private final String msg_str;
 
     SignMsg(String msg) {
-        msg_str= new String("msg");
-    }
-
-    SignMsg() {
-        msg_str="";
+        msg_str = msg;
     }
 
     @Override

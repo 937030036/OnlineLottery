@@ -1,5 +1,6 @@
 package com.example.onlinelottery.Service.ServiceImpl;
 
+import com.example.onlinelottery.Dao.TableMapper;
 import com.example.onlinelottery.Dao.UserMgrMapper;
 import com.example.onlinelottery.Model.UserMgr;
 import com.example.onlinelottery.Msg.SignMsg;
@@ -7,6 +8,8 @@ import com.example.onlinelottery.Service.IService.ISignHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
@@ -14,6 +17,9 @@ public class SignHandleService implements ISignHandle {
 
     @Autowired
     private UserMgrMapper userMgrMapper;
+
+    @Autowired
+    private TableMapper tableMapper;
 
     @Override
     public SignMsg RegisterHandle(String phone, String verifycode) {
@@ -39,7 +45,29 @@ public class SignHandleService implements ISignHandle {
         userMgr.setId(userMgrid);
         userMgr.setPhone(phone);
         userMgr.setBalance(0);
+        userMgr.setPassword(phone);
         userMgrMapper.addUserMgr(userMgr);
+        tableMapper.createUserTableByUserMgrId(userMgrid);
         return SignMsg.REGISTER_SUCC;
+    }
+
+    @Override
+    public SignMsg LoginHandle(HttpServletRequest request) {
+        String phone = new String((request.getParameter("phone")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String password = new String((request.getParameter("password")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+        UserMgr userMgr = userMgrMapper.getUserMgrByPhone(phone);
+        if (userMgr == null) {
+            return SignMsg.PHONE_NOEXIST;
+        }
+        if (userMgr.getPassword().equals(password)) {
+            if (password.equals(phone)) {
+                return SignMsg.FIRST_LOGIN;
+            } else {
+                return SignMsg.LOGIN_SUCC;
+            }
+        } else {
+            return SignMsg.PASSWORD_WRONG;
+        }
     }
 }

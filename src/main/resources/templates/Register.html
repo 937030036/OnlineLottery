@@ -3,50 +3,67 @@
 <head>
     <meta charset="UTF-8"/>
     <title>注册</title>
+    <style>
+        .register {
+            width: max-content;
+            height: max-content;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
 <br/>
 <br/>
-<div align="center">
-    <font size="5"> <strong>注册</strong></font>
+<div class="register">
+    <span style="font-size: large; "> <strong>注册</strong></span>
 </div>
 <br/>
-<div>
+<div class="register">
     <form name="register" action="/usermgr" method="post">
-        <input type="hidden" name="_method" value=""/>
-        <div align="center">
-            <input
-                    type="text"
-                    name="phone"
-                    placeholder="手机号"
-                    required="required"
-            />
+        <div class="register">
+            <label>
+                <input
+                        id="phone22"
+                        type="text"
+                        name="phone"
+                        placeholder="手机号"
+                        required="required"
+                />
+            </label>
         </div>
         <br/>
-        <div align="center">
-            <input
-                    type="text"
-                    name="verifycode"
-                    placeholder="验证码"
-                    required="required"
-            />
+        <div class="register">
+            <label>
+                <input
+                        id="verify22"
+                        type="text"
+                        name="verifycode"
+                        placeholder="验证码"
+                        required="required"
+                />
+            </label>
             <button id="verify1" style="color: aqua" type="button" onclick="verify()">发送短信</button>
         </div>
         <br/>
-        <div align="center">
-            <input type="checkbox" name="agree" checked>注册即表示您阅读并同意<a href="/agreement">《用户使用协议》</a>
+        <div class="register">
+            <label>
+                <input type="checkbox" name="agree" checked>
+            </label>注册即表示您阅读并同意<a href="/agreement">《用户使用协议》</a>
             <br>
             <br>
-            <button type="button" onclick="submit()">注册</button>
+
+        </div>
+        <div class="register">
+            <button type="button" onclick="submit1()">注册</button>
         </div>
     </form>
 </div>
-<div th:text="${msg}"></div>
+<div class="register" th:text="${msg}"></div>
 </body>
 </html>
 <script>
-    var x;
-    var i = 60;
+    let x;
+    let i = 60;
 
     function a() {
         i--;
@@ -54,10 +71,10 @@
     }
 
     function verify() {
-        document.getElementById("verify1").setAttribute("disabled", true);
+        document.getElementById("verify1").setAttribute("disabled", "true");
 
         x = setInterval(function () {
-            var ii = a();
+            const ii = a();
             if (ii < 1) {
                 clearInterval(x);
                 re();
@@ -73,8 +90,9 @@
         document.getElementById("verify1").innerHTML = "发送短信";
     }
 
-    function submit() {
-        document.register._method.value = "post";
-        document.register.submit();
+    function submit1() {
+        if (document.getElementById("phone22").value === "" || document.getElementById("verify22").value === "") {
+            alert("请填写必填字段");
+        } else document.register.submit();
     }
 </script>

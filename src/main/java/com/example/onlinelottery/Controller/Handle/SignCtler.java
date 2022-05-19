@@ -23,22 +23,38 @@ public class SignCtler {
     private SignMsg signMsg;
 
     @RequestMapping(value = "login-handle", method = RequestMethod.GET)
-    String loginHandle(HttpServletRequest request, HttpServletResponse response) {
-        return null;
+    String loginHandle(HttpServletRequest request, Model model) {
+        signMsg = signHandleService.LoginHandle(request);
+        model.addAttribute("msg", signMsg.toString());
+        if (signMsg.equals(SignMsg.PASSWORD_WRONG)) {
+            return "Login";
+        } else if (signMsg.equals(SignMsg.FIRST_LOGIN)) {
+            return "FirstLogin";
+        } else if (signMsg.equals(SignMsg.PHONE_NOEXIST)) {
+            return "Register";
+        } else if (signMsg.equals(SignMsg.LOGIN_SUCC)) {
+            //TODO index
+            return null;
+        } else {
+            //TODO exception page
+            return null;
+        }
     }
 
     @RequestMapping(value = "usermgr", method = RequestMethod.POST)
-    void registerHandle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String registerHandle(HttpServletRequest request, Model model) {
         String phone = new String((request.getParameter("phone")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         String verifycode = new String((request.getParameter("verifycode")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         signMsg = signHandleService.RegisterHandle(phone, verifycode);
-        request.setAttribute("msg", signMsg.toString());
+        model.addAttribute("msg", signMsg.toString());
         if (signMsg.equals(SignMsg.REGISTER_SUCC)) {
-            response.sendRedirect(request.getContextPath() + "login/page");
+            return "Login";
+        } else if (signMsg.equals(SignMsg.PHONE_EXIST)) {
+            return "Register";
         } else {
-            response.sendRedirect(request.getContextPath() + "register/page");
+            //TODO exception page
+            return null;
         }
-
     }
 
     @RequestMapping(value = "password", method = RequestMethod.POST)

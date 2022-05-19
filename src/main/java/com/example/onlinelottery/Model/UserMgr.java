@@ -7,4 +7,5 @@ public class UserMgr {
     private Integer id;
     private String phone;
     private Integer balance;
+    private String password;
 }
