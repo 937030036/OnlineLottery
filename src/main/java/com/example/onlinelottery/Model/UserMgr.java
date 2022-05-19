@@ -8,4 +8,5 @@ public class UserMgr {
     private String phone;
     private Integer balance;
     private String password;
+    private String email;
 }

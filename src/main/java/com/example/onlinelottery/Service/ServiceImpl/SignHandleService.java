@@ -60,7 +60,7 @@ public class SignHandleService implements ISignHandle {
         if (userMgr == null) {
             return SignMsg.PHONE_NOEXIST;
         }
-        if (userMgr.getPassword().equals(password)) {
+        else if (userMgr.getPassword().equals(password)) {
             if (password.equals(phone)) {
                 return SignMsg.FIRST_LOGIN;
             } else {
