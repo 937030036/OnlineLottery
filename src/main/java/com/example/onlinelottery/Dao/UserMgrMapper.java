@@ -9,15 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface UserMgrMapper {
-    @Select("select id,phone,balance,password from UserMgr")
+    @Select("select id,phone,balance,password,email from UserMgr")
     List<UserMgr> getUserMgrList();
 
-    @Select("select id,phone,balance,password from UserMgr where id=#{id}")
+    @Select("select id,phone,balance,password,email from UserMgr where id=#{id}")
     UserMgr getUserMgrById(String id);
 
-    @Select("select id,phone,balance,password from UserMgr where id=#{phone}")
+    @Select("select id,phone,balance,password,email from UserMgr where phone=#{phone}")
     UserMgr getUserMgrByPhone(String phone);
 
-    @Insert("insert into UserMgr value(#{id},#{phone},#{balance},#{password})")
+    @Insert("insert into UserMgr(id,phone,balance,password,email) value(#{id},#{phone},#{balance},#{password},#{email})")
     void addUserMgr(UserMgr userMgr);
 }
