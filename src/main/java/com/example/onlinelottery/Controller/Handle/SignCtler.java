@@ -1,5 +1,6 @@
 package com.example.onlinelottery.Controller.Handle;
 
+import com.example.onlinelottery.Model.UserMgr;
 import com.example.onlinelottery.Msg.SignMsg;
 import com.example.onlinelottery.Service.ServiceImpl.SignHandleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class SignCtler {
         if (signMsg.equals(SignMsg.PASSWORD_WRONG)) {
             return "Login";
         } else if (signMsg.equals(SignMsg.FIRST_LOGIN)) {
+
             return "FirstLogin";
         } else if (signMsg.equals(SignMsg.PHONE_NOEXIST)) {
             return "Register";
@@ -58,7 +60,28 @@ public class SignCtler {
     }
 
     @RequestMapping(value = "password", method = RequestMethod.POST)
-    String modifyHandle(HttpServletRequest request, HttpServletResponse response) {
-        return null;
+    String modifyHandle(HttpServletRequest request, Model model) {
+        String ver1 = (String) request.getSession().getAttribute("verify");
+        String pwd = new String((request.getParameter("pwd")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String email = new String((request.getParameter("email")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        String ver2 = new String((request.getParameter("verify")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        UserMgr userMgr = (UserMgr) request.getSession().getAttribute("usermgr");
+        Integer id = userMgr.getId();
+        if (!ver1.equals(ver2)) {
+            signMsg = SignMsg.VERIFY_WRONG;
+            model.addAttribute("msg", signMsg.toString());
+
+        } else {
+            signMsg = signHandleService.ModifypwdHandle(id, pwd, email);
+            model.addAttribute("msg", signMsg.toString());
+        }
+        if (signMsg.equals(SignMsg.VERIFY_WRONG)) {
+            return "FirstLogin";
+        } else if (signMsg.equals(SignMsg.MODIFYPWD_SUCC)) {
+            return "Login";
+        } else {
+            //TODO exception
+            return null;
+        }
     }
 }
