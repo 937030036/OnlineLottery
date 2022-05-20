@@ -1,7 +1,9 @@
 package com.example.onlinelottery.Service.ServiceImpl;
 
+import com.example.onlinelottery.Dao.AwardMapper;
 import com.example.onlinelottery.Dao.TableMapper;
 import com.example.onlinelottery.Dao.UserMgrMapper;
+import com.example.onlinelottery.Model.Award;
 import com.example.onlinelottery.Model.UserMgr;
 import com.example.onlinelottery.Msg.SignMsg;
 import com.example.onlinelottery.Service.IService.ISignHandle;
@@ -20,6 +22,8 @@ public class SignHandleService implements ISignHandle {
 
     @Autowired
     private TableMapper tableMapper;
+
+
 
     @Override
     public SignMsg RegisterHandle(String phone, String verifycode) {
@@ -46,6 +50,8 @@ public class SignHandleService implements ISignHandle {
         userMgr.setPhone(phone);
         userMgr.setBalance(0);
         userMgr.setPassword(phone);
+
+
         userMgrMapper.addUserMgr(userMgr);
         tableMapper.createUserTableByUserMgrId(userMgrid);
         return SignMsg.REGISTER_SUCC;
