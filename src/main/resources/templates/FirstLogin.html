@@ -51,8 +51,8 @@
 </div>
 <br/>
 <div class="first">
-    <form name="modify" action="/password" method="post">
-        <input type="hidden" name="_method" value=""/>
+    <form name="modify" action="/password" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="_method" value="put"/>
         <div class="first">
             <label for="pwd1"></label><input id="pwd1"
                                              type="password"
@@ -146,17 +146,17 @@
                 _pwd1 = true;
                 switch (level) {
                     case 1:
-                        spans[1].className = "weak";
+                        spans[0].className = "weak";
                         break;
                     case 2:
+                        spans[0].className = "medium";
                         spans[1].className = "medium";
-                        spans[2].className = "medium";
                         break;
                     case 3:
                     case 4:
+                        spans[0].className = "strong";
                         spans[1].className = "strong";
                         spans[2].className = "strong";
-                        spans[3].className = "strong";
                         break;
                 }
             } else {

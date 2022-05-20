@@ -35,8 +35,9 @@ public class SignCtler {
         } else if (signMsg.equals(SignMsg.PHONE_NOEXIST)) {
             return "Register";
         } else if (signMsg.equals(SignMsg.LOGIN_SUCC)) {
-            //TODO index
-            return null;
+            UserMgr userMgr= (UserMgr) request.getSession().getAttribute("usermgr");
+            model.addAttribute("phone",userMgr.getPhone());
+            return "Index";
         } else {
             //TODO exception page
             return null;
@@ -59,7 +60,7 @@ public class SignCtler {
         }
     }
 
-    @RequestMapping(value = "password", method = RequestMethod.POST)
+    @RequestMapping(value = "password", method = RequestMethod.PUT)
     String modifyHandle(HttpServletRequest request, Model model) {
         String ver1 = (String) request.getSession().getAttribute("verify");
         String pwd = new String((request.getParameter("pwd")).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);

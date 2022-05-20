@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理用户</title>
+</head>
+<style>
+    .mgr {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+
+    .table {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+        border: fuchsia;
+
+    }
+
+</style>
+<body>
+<div class="mgr">
+    <form name="userinfo" method="post">
+        <input type="hidden" name="_method" value=""/>
+        用户名：<label>
+        <input id="name" type="text" name="username">
+    </label>
+        <br><br><br>
+        电话：<label>
+        <input id="phone" type="text" name="userphone">
+    </label>
+        <br><br><br>
+        <button style="color: chocolate" type="button" onclick="adduser()">增加用户</button>
+        <button style="color: skyblue" type="button" onclick="deleteuser()">删除用户</button>
+        <button style="color: magenta" type="button" onclick="searchuser()">查询用户</button>
+    </form>
+</div>
+<br><br><br>
+<table border="1" class="table" style="width: 1000px;">
+    <tr>
+        <th>用户名</th>
+        <th>手机号</th>
+    </tr>
+    <tr th:each="it:${data}">
+        <td th:text="${it.getName()}"></td>
+        <td th:text="${it.getPhone()}"></td>
+    </tr>
+</table>
+<div class="mgr" th:text="${msg}"></div>
+</body>
+</html>
+<script>
+    function adduser() {
+        if (document.getElementById("name").value === "" || document.getElementById("phone").value === "") {
+            alert("信息不能为空！");
+        } else {
+            document.userinfo.action = "/user";
+            document.userinfo.submit();
+        }
+    }
+
+    function deleteuser() {
+        if (document.getElementById("name").value === "" || document.getElementById("phone").value === "") {
+            alert("信息不能为空！");
+        } else {
+            document.userinfo.action = "/user";
+            document.userinfo._method.value = "delete"
+            document.userinfo.submit();
+        }
+    }
+
+    function searchuser() {
+        if (document.getElementById("name").value === "" && document.getElementById("phone").value === "") {
+            alert("信息不能为空！");
+        } else {
+            document.userinfo.action = "/user";
+            document.userinfo.method = "get";
+            document.userinfo._method.value = "get"
+            document.userinfo.submit();
+        }
+    }
+</script>

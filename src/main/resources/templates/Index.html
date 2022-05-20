@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主界面</title>
+</head>
+<style>
+    .index {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+</style>
+<body>
+<div class="index">
+    <div class="index">
+        <br><br>
+        <h1>
+            <strong>欢迎你，</strong><strong th:text="${phone}"></strong>
+        </h1>
+        <br><br><br><br>
+    </div>
+    <form action="rule/page" method="get">
+        <button type="submit" style="color: #FF0000;width: 500px;height: 30px;">规则设置</button>
+    </form>
+    <br><br><br><br>
+    <form action="user/page" method="get">
+        <button type="submit" style="color: #33CC00;width: 500px;height: 30px;">管理用户</button>
+    </form>
+    <br><br><br><br>
+    <form action="award/page" method="get">
+        <button type="submit" style="color: #FF9900;width: 500px;height: 30px;">管理奖品</button>
+    </form>
+    <br><br><br><br>
+    <form action="History/page" method="get">
+        <button type="submit" style="color: aquamarine;width: 500px;height: 30px;">查看历史</button>
+    </form>
+    <div class="index" th:text="${msg}"></div>
+</div>
+
+</body>
+</html>
