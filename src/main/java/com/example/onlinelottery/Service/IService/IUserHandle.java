@@ -5,7 +5,7 @@ import com.example.onlinelottery.Msg.TransMsg;
 
 import java.util.List;
 
-public interface ITransHandle {
+public interface IUserHandle {
     List<User> getUserList(Integer id);
 
     TransMsg addUser(Integer id, String name, String phone);

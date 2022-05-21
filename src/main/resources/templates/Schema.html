@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>规则设置</title>
+</head>
+<style>
+    .rulec {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+</style>
+<body>
+<h2 class="rulec">
+    抽奖规则设置
+</h2>
+<form class="rulec" action="/index/page" method="get">
+    <button style="color: darkslateblue" type="submit">返回主界面</button>
+</form>
+<br><br>
+<h4 class="rulec">
+    抽奖人员设置
+</h4>
+<br><br>
+<form name="formn" action="/schema" method="post">
+
+    <div class="rulec">
+        模式名称：<label>
+        <input type="text" name="schemaname" required="required">
+    </label>
+    </div>
+    <br><br>
+    <div class="rulec">
+        抽奖人员设定：<label>
+        <select id="human" name="human" style="width: 200px;height: 30px">
+            <option>现场扫码报名</option>
+            <option>来自已导入人员</option>
+        </select>
+    </label>
+    </div>
+    <div class="rulec">
+        <br><br>
+        抽奖奖品设定：<label>
+        <select name="award" style="width: 200px;height: 30px">
+            <option>在已导入的奖池中选择</option>
+        </select>
+    </label>
+    </div>
+    <div class="rulec">
+        <br><br>
+        抽奖模式设定：<label>
+        <select name="schema" style="width: 200px;height: 30px">
+            <option>确定奖项后，随机候选人</option>
+            <option>确定奖项后，随机候选人，但排除已获奖人员</option>
+            <option>随机候选人后，随机抽取奖品</option>
+            <option>随机候选人后，随机抽取奖品，但排除已抽取完的奖品</option>
+        </select>
+    </label>
+    </div>
+    <div class="rulec">
+        <br><br>
+        <button type="button" onclick="save()" style="color: #FF9900;width: 500px;height: 30px;">暂存模式</button>
+        <br><br>
+        <button type="button" onclick="sub()" style="color: hotpink;width: 500px;height: 30px;">提交模式</button>
+    </div>
+</form>
+<br><br>
+<div class="rulec">
+    <form name="schemaform" action="/schema" method="post">
+        <input type="hidden" name="_method" value="">
+        <input type="hidden" name="schemaname" value="">
+        <table class="table" border="1" style="width: 1000px;">
+            <tr>
+                <th>模式发起人</th>
+                <th>模式名称</th>
+                <th></th>
+            </tr>
+            <tr th:each="it:${data}">
+                <td align="center" th:text="${it.getUsermgrname()}"></td>
+                <td align="center" th:text="${it.getSchemaname()}"></td>
+                <td align="center">
+                    <button th:name="${it.getSchemaname()}" type="button" onclick="appschema(this.name)"
+                            style="color: brown;"
+                    >应用
+                    </button>
+                    <button th:name="${it.getSchemaname()}" type="button" onclick="delschema(this.name)"
+                            style="color: brown;"
+                    >删除
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="rulec" th:text="${msg}"></div>
+</body>
+</html>
+<script>
+    function save() {
+        if(document.formn.schemaname.value===""){
+            alert("请设置名称")
+        }else{
+            document.formn.submit();
+        }
+
+    }
+
+    function sub() {
+        if(document.formn.schemaname.value===""){
+            alert("请设置名称")
+        }else{
+            document.formn.submit();
+        }
+    }
+    function delschema(name){
+        document.schemaform.schemaname.value=name;
+        document.schemaform._method.value="delete";
+        document.schemaform.submit();
+    }
+    function appschema(name){
+        document.schemaform.schemaname.value=name;
+        document.schemaform._method.value="put";
+        document.schemaform.submit();
+    }
+</script>

@@ -20,19 +20,23 @@
         </h1>
         <br><br><br><br>
     </div>
-    <form action="rule/page" method="get">
+    <form action="/rule/page" method="get">
         <button type="submit" style="color: #FF0000;width: 500px;height: 30px;">规则设置</button>
     </form>
     <br><br><br><br>
-    <form action="user/page" method="get">
+    <form action="/user/page" method="get">
         <button type="submit" style="color: #33CC00;width: 500px;height: 30px;">管理用户</button>
     </form>
     <br><br><br><br>
-    <form action="award/page" method="get">
+    <form action="/award/page" method="get">
         <button type="submit" style="color: #FF9900;width: 500px;height: 30px;">管理奖品</button>
     </form>
     <br><br><br><br>
-    <form action="History/page" method="get">
+    <form action="/lottery/page" method="get">
+        <button type="submit" style="color: yellowgreen;width: 500px;height: 30px;">发起抽奖</button>
+    </form>
+    <br><br><br><br>
+    <form action="/History/page" method="get">
         <button type="submit" style="color: aquamarine;width: 500px;height: 30px;">查看历史</button>
     </form>
     <div class="index" th:text="${msg}"></div>

@@ -6,5 +6,5 @@ import lombok.Data;
 public class Award {
     private String grade;
     private String name;
-    private String pic;
+    private Integer num;
 }

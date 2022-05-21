@@ -2,16 +2,15 @@ package com.example.onlinelottery.Service.ServiceImpl;
 
 import com.example.onlinelottery.Dao.UserMapper;
 import com.example.onlinelottery.Model.User;
-import com.example.onlinelottery.Msg.SignMsg;
 import com.example.onlinelottery.Msg.TransMsg;
-import com.example.onlinelottery.Service.IService.ITransHandle;
+import com.example.onlinelottery.Service.IService.IUserHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TransHandleService implements ITransHandle {
+public class UserHandleService implements IUserHandle {
     @Autowired
     private UserMapper userMapper;
 

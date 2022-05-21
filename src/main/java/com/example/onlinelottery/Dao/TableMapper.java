@@ -11,4 +11,11 @@ public interface TableMapper {
             "name varchar(10)"+
             ")")
     void createUserTableByUserMgrId(Integer id);
+
+    @Update("create table #{id}_award (" +
+            "grade varchar(10),"+
+            "name varchar(15),"+
+            "num int"+
+            ")")
+    void createAwardTableByUserMgrId(Integer id);
 }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理奖品</title>
+</head>
+<style>
+    .awardc {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+
+    .table {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+        border: fuchsia;
+    }
+</style>
+<body>
+<div class="awardc">
+    <h2 class="awardc">奖品</h2>
+    <form class="awardc" action="/index/page" method="get">
+        <button style="color: darkslateblue" type="submit">返回主界面</button>
+    </form>
+    <br><br>
+    <form class="awardc" name="awardinfo" action="/award" method="post" >
+        奖品等级：<label>
+        <select name="grade" style="width: 200px;height: 30px">
+            <option>特等奖</option>
+            <option>一等奖</option>
+            <option>二等奖</option>
+            <option>三等奖</option>
+            <option>参与奖</option>
+        </select>
+    </label>
+        <br><br>
+        奖品名称：<label>
+        <input name="name" type="text" style="width: 200px;height: 20px">
+    </label>
+        <br><br>
+        奖品数量：<label>
+        <input name="num" type="number" style="width: 200px;height: 20px">
+    </label>
+        <br><br>
+        <div class="awardc">
+            <button type="button" onclick="addaward()" style="color: darkcyan;width: 200px;height: 30px">增加奖品</button>
+        </div>
+        <br><br>
+    </form>
+    <form name="delete" action="/award" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="name" value="">
+        <table class="table" border="1" style="width: 1000px;">
+            <tr>
+                <th>奖品级别</th>
+                <th>奖品名称</th>
+                <th>奖品数量</th>
+                <th></th>
+            </tr>
+            <tr th:each="it:${data}">
+                <td align="center" th:text="${it.getGrade()}"></td>
+                <td align="center" th:text="${it.getName()}"></td>
+                <td align="center" th:text="${it.getNum()}"></td>
+                <td align="center">
+                    <button th:name="${it.getName()}" type="button" onclick="delaward(this.name)"
+                            style="color: brown;"
+                    >删除
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="awardc" th:text="${msg}"></div>
+</body>
+</html>
+<script>
+    function addaward() {
+        if (document.awardinfo.name.value !== "" && document.awardinfo.num.value !== "") {
+            document.awardinfo.submit();
+        } else {
+            alert("奖品信息不完整");
+        }
+    }
+
+    function delaward(name1) {
+        document.delete.name.value = name1;
+        document.delete.submit();
+    }
+</script>
