@@ -28,6 +28,12 @@ public enum TransMsg {
 
     SETSCHEMA_SUCC("设置模式成功"),
 
+    LAUNCHLOTTERY_SUCC("发起抽奖成功"),
+
+    LAUNCHLOTTERY_FAIL("奖池或用户不存在"),
+
+    DELETEHISTORY_SUCC("删除记录成功"),
+
     NO_MSG("");
 
     private final String msg_str;

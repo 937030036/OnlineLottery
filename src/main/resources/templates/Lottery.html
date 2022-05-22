@@ -5,9 +5,67 @@
     <title>发起抽奖</title>
 </head>
 <style>
+    .loc {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
 
+    .table {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+        border: fuchsia;
+    }
 </style>
 <body>
+<div class="loc">
+    <h2 class="loc">抽奖</h2>
+    <form class="loc" action="/index/page" method="get">
+        <button style="color: darkslateblue" type="submit">返回主界面</button>
+    </form>
+    <br><br>
+    <br>
+    <h3 class="loc">当前应用的抽奖模式</h3>
+    <div class="loc" th:if="${appschema==null}">
+        <br>
+        <p>您还没有应用任何模式！</p>
+    </div>
+    <div class="loc" th:if="${appschema!=null}">
+        <br>
+        模式名称：<h4 class="loc" th:text="${appschema.getSchemaname()}"></h4>
+        <br>
+        模式创建者：<h4 class="loc" th:text="${appschema.getUsermgrname()}"></h4>
+        <br>
+        抽奖人员设定：<h4 class="loc" th:text="${appschema.getHumansel()}"></h4>
+        <br>
+        抽奖模式设定：<h4 class="loc" th:text="${appschema.getSchemasel()}"></h4>
+        <br>
 
+        <form action="/lottery" method="post">
+            此次抽奖活动名称<label>
+                <input type="text" name="lotteryname" required="required">
+            </label>
+            <br><br>
+            <button type="submit" style="color: #FF9900;width: 500px;height: 30px;">开始抽奖</button>
+        </form>
+    </div>
+    <br>
+    <div class="loc" th:if="${data!=null}">
+        <table class="table" border="1" style="width: 1000px;">
+            <tr>
+                <th>奖品级别</th>
+                <th>奖品名</th>
+                <th>获奖者</th>
+            </tr>
+            <tr th:each="it:${data}">
+                <td align="center" th:text="${it.getGrade()}"></td>
+                <td align="center" th:text="${it.getAward()}"></td>
+                <td align="center" th:text="${it.getUsername()}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="loc" th:text="${msg}"></div>
 </body>
 </html>

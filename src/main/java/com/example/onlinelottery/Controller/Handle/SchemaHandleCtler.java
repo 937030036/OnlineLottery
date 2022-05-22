@@ -47,7 +47,8 @@ public class SchemaHandleCtler {
     String applySchema(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
         String schemaname = request.getParameter("schemaname");
-        transMsg =schemaHandle.setAppSchema(schemaname);
+        UserMgr userMgr = (UserMgr) request.getSession().getAttribute("usermgr");
+        transMsg =schemaHandle.setAppSchema(userMgr.getId(),schemaname);
         model.addAttribute("msg", transMsg.toString());
         model.addAttribute("data", schemaHandle.getSchemaList());
         return "Schema";

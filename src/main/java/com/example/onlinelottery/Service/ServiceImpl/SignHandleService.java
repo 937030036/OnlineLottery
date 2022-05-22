@@ -51,6 +51,7 @@ public class SignHandleService implements ISignHandle {
         userMgrMapper.addUserMgr(userMgr);
         tableMapper.createUserTableByUserMgrId(userMgrid);
         tableMapper.createAwardTableByUserMgrId(userMgrid);
+        tableMapper.createHistoryTableByUserMgrId(userMgrid);
         return SignMsg.REGISTER_SUCC;
     }
 

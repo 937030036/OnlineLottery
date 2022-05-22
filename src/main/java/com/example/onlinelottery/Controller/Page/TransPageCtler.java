@@ -1,8 +1,10 @@
 package com.example.onlinelottery.Controller.Page;
 
 import com.example.onlinelottery.Model.Award;
+import com.example.onlinelottery.Model.Schema;
 import com.example.onlinelottery.Model.UserMgr;
 import com.example.onlinelottery.Service.IService.IAwardHandle;
+import com.example.onlinelottery.Service.IService.ILotteryHandle;
 import com.example.onlinelottery.Service.IService.ISchemaHandle;
 import com.example.onlinelottery.Service.IService.IUserHandle;
 import com.example.onlinelottery.Service.ServiceImpl.SchemaHandleService;
@@ -27,9 +29,13 @@ public class TransPageCtler {
     @Autowired
     private ISchemaHandle schemaHandle;
 
+    @Autowired
+    private ILotteryHandle lotteryHandle;
+
+
     @RequestMapping(value = "rule/page", method = RequestMethod.GET)
     String getRulePage(Model model) {
-        model.addAttribute("data",schemaHandle.getSchemaList());
+        model.addAttribute("data", schemaHandle.getSchemaList());
         return "Schema";
     }
 
@@ -50,13 +56,16 @@ public class TransPageCtler {
 
     @RequestMapping(value = "lottery/page", method = RequestMethod.GET)
     String getLotteryPage(HttpServletRequest request, Model model) {
+        UserMgr userMgr = (UserMgr) request.getSession().getAttribute("usermgr");
+        model.addAttribute("appschema", schemaHandle.getAppSchema(userMgr.getId()));
         return "Lottery";
     }
 
     @RequestMapping(value = "history/page", method = RequestMethod.GET)
-    String getHistoryPage(Model model) {
-        //todo
-        return null;
+    String getHistoryPage(HttpServletRequest request, Model model) {
+        UserMgr userMgr = (UserMgr) request.getSession().getAttribute("usermgr");
+        model.addAttribute("lotterylist",lotteryHandle.getLotteryList(userMgr.getId()));
+        return "History";
     }
 
 }

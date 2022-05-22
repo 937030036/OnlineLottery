@@ -1,6 +1,7 @@
 package com.example.onlinelottery.Service.ServiceImpl;
 
 import com.example.onlinelottery.Dao.SchemaMapper;
+import com.example.onlinelottery.Dao.UserMgrMapper;
 import com.example.onlinelottery.Model.Schema;
 import com.example.onlinelottery.Msg.TransMsg;
 import com.example.onlinelottery.Service.IService.ISchemaHandle;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @Service
 public class SchemaHandleService implements ISchemaHandle {
-    private static Schema appschema;
+    @Autowired
+    private UserMgrMapper userMgrMapper;
 
     @Autowired
     private SchemaMapper schemaMapper;
@@ -48,20 +50,18 @@ public class SchemaHandleService implements ISchemaHandle {
     }
 
     @Override
-    public TransMsg setAppSchema(String schemaname) {
-        List<Schema> schemaList = schemaMapper.getSchemaList();
-        for (var sc : schemaList) {
-            if (sc.getSchemaname().equals(schemaname)) {
-                appschema = sc.clone();
-            }
-        }
+    public TransMsg setAppSchema(Integer id,String schemaname) {
+        userMgrMapper.setAppSchemaById(id,schemaname);
         return TransMsg.SETSCHEMA_SUCC;
     }
 
     @Override
-    public Schema getAppSchema() {
-        // todo null
-        return appschema;
+    public Schema getAppSchema(Integer id) {
+        String name = userMgrMapper.getAppSchemaById(id);
+        if(name==null){
+            return null;
+        }
+        return schemaMapper.getSchemaByName(name);
     }
 }
 

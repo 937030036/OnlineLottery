@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class History {
-    private Integer userid;
+    private String lotteryname;
+    private String username;
     private String grade;
+    private String award;
 }

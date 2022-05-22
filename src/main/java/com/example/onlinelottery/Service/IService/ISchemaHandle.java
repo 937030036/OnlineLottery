@@ -14,8 +14,8 @@ public interface ISchemaHandle {
 
     List<Schema> getSchemaList();
 
-    TransMsg setAppSchema(String schemaname);
+    TransMsg setAppSchema(Integer id,String schemaname);
 
-    Schema getAppSchema();
+    Schema getAppSchema(Integer id);
 }
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖历史</title>
+</head>
+<style>
+    .hisc {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+    }
+
+    .table {
+        width: max-content;
+        height: max-content;
+        margin: auto;
+        border: fuchsia;
+    }
+</style>
+<body>
+<h2 class="hisc">你的抽奖历史记录</h2>
+<br><br>
+<table class="table" border="1" style="width: 1000px;">
+    <tr>
+        <th>活动名称</th>
+        <th>获奖者</th>
+        <th>奖品等级</th>
+        <th>奖品名称</th>
+    </tr>
+    <tr th:each="it:${lotterylist}">
+        <td align="center" th:text="${it.getLotteryname()}"></td>
+        <td align="center" th:text="${it.getUsername()}"></td>
+        <td align="center" th:text="${it.getGrade()}"></td>
+        <td align="center" th:text="${it.getAward()}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -19,5 +19,7 @@ public interface SchemaMapper {
 
     @Delete("delete from lschema where schemaname=#{schemaname}")
     void deleteSchema(String schemaname);
+    @Select("select schemaname,usermgrname,humansel,schemasel from lschema where schemaname=#{name}")
+    Schema getSchemaByName(String name);
 
 }

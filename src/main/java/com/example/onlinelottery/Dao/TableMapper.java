@@ -18,4 +18,12 @@ public interface TableMapper {
             "num int"+
             ")")
     void createAwardTableByUserMgrId(Integer id);
+
+    @Update("create table #{id}_history (" +
+            "lotteryname varchar(20),"+
+            "username varchar(15),"+
+            "grade varchar(20),"+
+            "award varchar(20)"+
+            ")")
+    void createHistoryTableByUserMgrId(Integer id);
 }
